@@ -2,14 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 import { api } from "~/trpc/react";
 
-export function CreatePost() {
+const CreateTask = () => {
   const router = useRouter();
   const [name, setName] = useState("");
 
-  const createPost = api.post.create.useMutation({
+  const createTask = api.task.createTask.useMutation({
     onSuccess: () => {
       router.refresh();
       setName("");
@@ -20,7 +19,7 @@ export function CreatePost() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createPost.mutate({ name });
+        createTask.mutate({ title: name });
       }}
       className="flex flex-col gap-2"
     >
@@ -34,10 +33,12 @@ export function CreatePost() {
       <button
         type="submit"
         className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
-        disabled={createPost.isPending}
+        disabled={createTask.isPending}
       >
-        {createPost.isPending ? "Submitting..." : "Submit"}
+        {createTask.isPending ? "Submitting..." : "Submit"}
       </button>
     </form>
   );
 }
+
+export default CreateTask
