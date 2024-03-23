@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
-import TodoList from "./_components/TodoList";
+import TodoList from "../components/TodoList";
 export default async function Home() {
   const session = await getServerAuthSession();
 

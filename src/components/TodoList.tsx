@@ -1,7 +1,7 @@
 // "use server"
 
 import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import { api } from "~/app/_trpc/server";
 import CreateTask from "./CreateTask";
 import TodoItem from "./TodoItem";
 
