@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
-import TodoList from "../components/TodoList";
+import TaskList from "../components/task/TaskList";
+import CategoryList from "~/components/category/CategoryList";
 export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+    <main className="">
+      <div className=" flex gap-12 px-4 py-16 ">
         <div className="flex flex-col items-center gap-2">
-          <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex gap-4">
             <p className="text-center text-2xl text-white">
               {session && <span>Logged in as {session.user?.name}</span>}
             </p>
@@ -21,7 +22,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <TodoList />
+      <CategoryList />
     </main>
   );
 }

@@ -9,6 +9,9 @@ export default {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
     },
+    container :{
+      padding : '3rem',
+    }
   },
   plugins: [],
 } satisfies Config;

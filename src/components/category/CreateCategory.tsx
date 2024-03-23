@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { api } from "~/app/_trpc/react";
 
-const CreateTask = () => {
+const CreateCategory = () => {
   const router = useRouter();
   const [name, setName] = useState("");
 
-  const createTask = api.task.createTask.useMutation({
+  const createCategory = api.category.createCategory.useMutation({
     onSuccess: () => {
       router.refresh();
       setName("");
@@ -19,7 +19,7 @@ const CreateTask = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createTask.mutate({ title: name });
+        createCategory.mutate({ name: name });
       }}
       className="flex flex-col gap-2"
     >
@@ -33,12 +33,12 @@ const CreateTask = () => {
       <button
         type="submit"
         className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
-        disabled={createTask.isPending}
+        disabled={createCategory.isPending}
       >
-        {createTask.isPending ? "Submitting..." : "Submit"}
+        {createCategory.isPending ? "Submitting..." : "Submit"}
       </button>
     </form>
   );
 }
 
-export default CreateTask
+export default CreateCategory

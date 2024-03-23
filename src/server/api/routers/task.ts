@@ -1,24 +1,32 @@
+import { title } from "process";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const taskRouter = createTRPCRouter({
-// why am i getting useMutaion in create task but not in updateOne and deleteOne
   createTask: protectedProcedure
     .input(
       z.object({
         title: z.string(),
+        category: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       const createdById = ctx.session.user.id;
+
+      const existingCategory = await ctx.db.category.findUnique({
+        where: { name: input.category }, // Use input.category for consistency
+      });
+      if (!existingCategory) {
+        throw new Error("Category not found");
+      }
+
       const createdTask = await ctx.db.task.create({
         data: {
           title: input.title,
           createdById: createdById,
-          // completed: false,
+          categoryId : existingCategory.id,
         },
       });
       return createdTask;
@@ -32,7 +40,6 @@ export const taskRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const id = input.id;
       const updatedTask = await ctx.db.task.update({
         where: {
           id: input.id,
@@ -41,12 +48,12 @@ export const taskRouter = createTRPCRouter({
           completed: input.completed,
         },
       });
-      console.log(updatedTask)
-      return ctx.db.task.findMany({
-        where: {
-          createdById: ctx.session.user.id
-          },
-        })
+      return updatedTask;
+      // return ctx.db.task.findMany({
+      //   where: {
+      //     createdById: ctx.session.user.id
+      //     },
+      //   })
     }),
 
   deleteOne: protectedProcedure
@@ -57,28 +64,24 @@ export const taskRouter = createTRPCRouter({
           id: input,
         },
       });
-      console.log(deletedTask)
-      return ctx.db.task.findMany({
-        where : {
-          createdById: ctx.session.user.id
-        },
-        }); ;
+      return deletedTask;
+      // return ctx.db.task.findMany({
+      //   where : {
+      //     createdById: ctx.session.user.id
+      //   },
+      //   });
     }),
-    // client side code
-    // const deleteTask = api.task.deleteOne.useMutation({});
-
-    // const createTask = api.task.createTask.useMutation({
-    //   onSuccess: () => {
-    //     router.refresh();
-    //     setName("");
-    //   },
-    // });
   
-  getAllTodos: protectedProcedure.query( async ({ ctx }) => {
+  getAllTasks: protectedProcedure
+  .input(z.string())
+  .query( async ({ ctx , input  }) => {
 
     const createdTask = await ctx.db.task.findMany({
       where : {
-        createdById: ctx.session.user.id
+        createdById: ctx.session.user.id,
+        category : {
+          name : input
+        }
       },
       });
       return createdTask;
