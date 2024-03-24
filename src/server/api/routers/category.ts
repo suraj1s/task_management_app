@@ -23,7 +23,7 @@ export const categoryRouter = createTRPCRouter({
   updateOne: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
         name: z.string(),
       }),
     )
@@ -40,7 +40,7 @@ export const categoryRouter = createTRPCRouter({
     }),
 
   deleteOne: protectedProcedure
-    .input(z.number())
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
       const deletedCategory = await ctx.db.category.delete({
         where: {
@@ -55,7 +55,15 @@ export const categoryRouter = createTRPCRouter({
       where: {
         createdById: ctx.session.user.id,
       },
+      include : {
+        tasks : {
+          select : {
+            id : true
+          }
+      }
+      },
     });
+    // console.log(createdCategory, "this is the created category")
     return createdCategory;
   }),
 });

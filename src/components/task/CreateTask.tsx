@@ -3,11 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { api } from "~/app/_trpc/react";
+import AddButton from "../common/AddButton";
 
 const CreateTask = ({ category }: { category: string }) => {
   const router = useRouter();
+  const decodedCategory = decodeURIComponent(category);
   const [name, setName] = useState("");
-
   const createTask = api.task.createTask.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -19,9 +20,9 @@ const CreateTask = ({ category }: { category: string }) => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createTask.mutate({ title: name, category });
+        createTask.mutate({ title: name, category: decodedCategory });
       }}
-      className="flex flex-col gap-2"
+      className="flex  gap-2"
     >
       <input
         type="text"
@@ -30,13 +31,7 @@ const CreateTask = ({ category }: { category: string }) => {
         onChange={(e) => setName(e.target.value)}
         className="w-full rounded-full px-4 py-2 text-black"
       />
-      <button
-        type="submit"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
-        disabled={createTask.isPending}
-      >
-        {createTask.isPending ? "Submitting..." : "Submit"}
-      </button>
+      <AddButton isPending={createTask.isPending} title="Create Task" />
     </form>
   );
 };
