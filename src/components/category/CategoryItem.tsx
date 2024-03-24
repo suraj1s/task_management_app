@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import React from "react";
-import { api } from "~/app/_trpc/react";
+// import { api } from "~/app/_trpc/react";
 
 interface ICategoryItemProp {
   category: {
@@ -14,7 +14,7 @@ interface ICategoryItemProp {
 }
 }
 const CategoryItem = ({ category }: ICategoryItemProp) => {
-const router = useRouter();
+// const router = useRouter();
   // const updateCategory = api.category.updateOne.useMutation({
   //   onSuccess: () => {
   //     router.refresh();
@@ -25,7 +25,7 @@ const router = useRouter();
 
   
   return (
-    <Link href={`/${category.name}`} key={category.id} className="flex items-center gap-2">
+    <Link href={`/home/${category.name}`} key={category.id} className="flex items-center gap-2">
       <p>{category.name}</p>
     </Link>
   );

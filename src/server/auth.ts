@@ -6,11 +6,9 @@ import {
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
-import { userRouter } from "./api/routers/user";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
