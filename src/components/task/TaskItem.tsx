@@ -18,7 +18,11 @@ const router = useRouter();
     },  
   });
 
-  const deleteTask = api.task.deleteOne.useMutation({});
+  const deleteTask = api.task.deleteOne.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    }, 
+  });
 
   
   return (

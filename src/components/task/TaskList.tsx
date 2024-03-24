@@ -15,9 +15,30 @@ const TaskList = async ({ category }: { category: string }) => {
       <h2 className="py-5 text-2xl font-semibold ">All your task</h2>
 
       <div className="w-full space-y-8 rounded-3xl border-2 border-slate-200 px-10 py-6 ">
-        <div className=" grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {taskData ? (
-            taskData.map((task) => <TaskItem task={task} key={task.id} />)
+        <div>
+          {taskData.length > 0 ? (
+            <div className="grid grid-cols-1 gap-8  sm:grid-cols-2">
+              <div>
+                <h3> Incomplete Tasks </h3>
+                <div className=" border border-slate-300 py-10 px-5 rounded-xl grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {taskData
+                    .filter((task) => !task.completed)
+                    .map((task) => (
+                      <TaskItem task={task} key={task.id} />
+                    ))}
+                </div>
+              </div>
+              <div>
+                <h3> Complete Tasks </h3>
+                <div className="border border-slate-300 py-10 px-5  rounded-xl grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {taskData
+                    .filter((task) => task.completed)
+                    .map((task) => (
+                      <TaskItem task={task} key={task.id} />
+                    ))}
+                </div>
+              </div>
+            </div>
           ) : (
             <p>You have no tasks yet.</p>
           )}
