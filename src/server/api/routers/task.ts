@@ -1,4 +1,3 @@
-import { title } from "process";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -14,14 +13,13 @@ export const taskRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
       const createdById = ctx.session.user.id;
-
-      const existingCategory = await ctx.db.category.findUnique({
+      const existingCategory = await ctx.db.category.findFirst({
         where: { name: input.category }, // Use input.category for consistency
       });
       if (!existingCategory) {
         throw new Error("Category not found");
       }
-
+        // console.log(existingCategory , "this is the existing category")
       const createdTask = await ctx.db.task.create({
         data: {
           title: input.title,
@@ -35,7 +33,7 @@ export const taskRouter = createTRPCRouter({
   updateOne: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
         completed: z.boolean(),
       }),
     )
@@ -57,7 +55,7 @@ export const taskRouter = createTRPCRouter({
     }),
 
   deleteOne: protectedProcedure
-    .input(z.number())
+    .input(z.string())
     .mutation(async ({ ctx, input }) => {
       const deletedTask = await ctx.db.task.delete({
         where: {

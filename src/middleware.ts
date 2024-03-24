@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getSession } from "next-auth/react";
 
-const routsWithAuth = ["", "signin", "callback" , "session"];
+const routsWithAuth = ["", "signin", "callback", "session"];
 
 export async function middleware(request: NextRequest) {
   const requestForNextAuth = {
@@ -12,6 +12,7 @@ export async function middleware(request: NextRequest) {
   };
   //   @ts-expect-error - ignore this line
   const session = await getSession({ req: requestForNextAuth });
+  // const session = "hello"
   const { pathname } = request.nextUrl;
   const paths = pathname.split("/");
   // console.log(session, paths);

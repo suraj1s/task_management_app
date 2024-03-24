@@ -5,7 +5,7 @@ import { api } from "~/app/_trpc/react";
 
 interface ITaskItemProp {
   task: {
-    id: number;
+    id: string;
     title: string;
     completed: boolean;
   };

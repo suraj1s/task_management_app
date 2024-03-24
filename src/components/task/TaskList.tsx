@@ -8,8 +8,8 @@ import TaskItem from "./TaskItem";
 const TaskList = async ({ category }: { category: string }) => {
   const session = await getServerAuthSession();
   if (!session?.user) return null;
-
-  const taskData = await api.task.getAllTasks(category);
+  const decodedCategory = decodeURIComponent(category);
+  const taskData = await api.task.getAllTasks(decodedCategory);
   return (
     <div className="w-full ">
       <h2 className="py-5 text-2xl font-semibold ">All your task</h2>

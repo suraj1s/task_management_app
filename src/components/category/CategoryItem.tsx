@@ -6,12 +6,13 @@ import { api } from "~/app/_trpc/react";
 
 interface ICategoryItemProp {
   category: {
-    id: number;
+    id: string;
     name: string;
     description: string | null;
     createdAt: Date;
     updatedAt: Date;
     createdById: string;
+    tasks : object[]
   };
 }
 const CategoryItem = ({ category }: ICategoryItemProp) => {
@@ -29,21 +30,25 @@ const CategoryItem = ({ category }: ICategoryItemProp) => {
   });
 
   return (
-    <div className="flex flex-row  justify-between cursor-pointer  gap-5 rounded-md  bg-slate-800 px-5 py-3 ">
-    <Link
-      href={`/home/${category.name}`}
-      key={category.id}
-      className="flex flex-row  justify-between cursor-pointer  gap-2 rounded-md border border-slate-200 bg-slate-800 px-5 py-3 hover:bg-slate-700  hover:text-blue-300"
-    >
-      <div className="flex flex-col gap-y-2">
-        <h4 className="text-xl font-semibold ">{category?.name}</h4>
-        <p>{category?.description}</p>
-      </div>
-    </Link>
+    <div className="flex cursor-pointer  flex-row justify-between  gap-5 rounded-md  bg-slate-800 px-5 py-3 ">
+      <Link
+        href={`/home/${category.name}`}
+        key={category.id}
+        className="flex cursor-pointer  flex-row justify-between  gap-2 rounded-md border border-slate-200 bg-slate-800 px-5 py-3 hover:bg-slate-700  hover:text-blue-300"
+      >
+        <div className="flex flex-col gap-y-2">
+          <h4 className="text-xl font-semibold ">{category?.name}</h4>
+          <p>{category?.description}</p>
+          <p>Total Tasks : {category.tasks.length}</p>
+        </div>
+      </Link>
       <div className="flex flex-col gap-y-3 ">
-        <button onClick={() => {
-          deleteCategory.mutate(category.id);
-        }} className="text-white hover:text-blue-400">
+        <button
+          onClick={() => {
+            deleteCategory.mutate(category.id);
+          }}
+          className="text-white hover:text-blue-400"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -57,7 +62,6 @@ const CategoryItem = ({ category }: ICategoryItemProp) => {
           </svg>
         </button>
       </div>
-
     </div>
   );
 };

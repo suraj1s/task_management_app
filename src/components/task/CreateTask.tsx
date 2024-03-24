@@ -7,8 +7,8 @@ import AddButton from "../common/AddButton";
 
 const CreateTask = ({ category }: { category: string }) => {
   const router = useRouter();
+  const decodedCategory = decodeURIComponent(category);
   const [name, setName] = useState("");
-
   const createTask = api.task.createTask.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -20,7 +20,7 @@ const CreateTask = ({ category }: { category: string }) => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createTask.mutate({ title: name, category });
+        createTask.mutate({ title: name, category: decodedCategory });
       }}
       className="flex  gap-2"
     >
@@ -31,8 +31,7 @@ const CreateTask = ({ category }: { category: string }) => {
         onChange={(e) => setName(e.target.value)}
         className="w-full rounded-full px-4 py-2 text-black"
       />
-            <AddButton isPending = {createTask.isPending } title="Create Task" />
-
+      <AddButton isPending={createTask.isPending} title="Create Task" />
     </form>
   );
 };
