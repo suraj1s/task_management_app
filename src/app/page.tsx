@@ -15,11 +15,11 @@ const page = async () => {
           Go To Home Page
         </Link>
       ) : (
-        <p className="p-10 text-center text-3xl font-semibold">
+        <p className="p-10 text-center text-3xl flex items-center  justify-center font-semibold">
           You are not logged in. Please
           <Link
             href="/api/auth/signin"
-            className="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold no-underline transition hover:bg-white/20"
+            className="rounded-full bg-white/10  mx-5 px-4 py-2 text-sm font-semibold no-underline transition hover:bg-white/20"
           >
             {" "}
             Sign in
