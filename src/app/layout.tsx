@@ -23,10 +23,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} bg-slate-950 text-slate-200 container `}>
+      <body
+        className={`font-sans ${inter.variable} container bg-slate-950 text-slate-200 `}
+      >
         <TRPCReactProvider>
           <Navbar />
-          {children}</TRPCReactProvider>
+          {children}
+        </TRPCReactProvider>
       </body>
     </html>
   );
