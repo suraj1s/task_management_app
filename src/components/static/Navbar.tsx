@@ -5,7 +5,7 @@ const Navbar = async () => {
   const session = await getServerAuthSession();
   return (
     session && (
-    <div className="flex items-center justify-end py-5  gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-end py-5  gap-4">
       <div className="text-center text-xl text-white">
         {session && (
           <p>
