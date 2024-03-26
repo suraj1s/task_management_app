@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { env } from "./env";
 const routsWithAuth = ["", "signin", "callback", "session"];
 
 export async function middleware(request: NextRequest) {
-  const session = request.cookies.get("next-auth.session-token")?.value ?? null;
+  const session = request.cookies.get(env.AUTH_SESSION_TOKEN)?.value ?? null;
   const { pathname } = request.nextUrl;
   const paths = pathname.split("/");
   if (session) {
