@@ -15,7 +15,7 @@ const page = async () => {
           Go To Home Page
         </Link>
       ) : (
-        <p className="p-10 text-center text-3xl flex items-center  justify-center font-semibold">
+        <p className="p-10 text-center text-3xl flex flex-col sm:flex-row items-center  justify-center font-semibold">
           You are not logged in. Please
           <Link
             href="/api/auth/signin"

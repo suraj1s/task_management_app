@@ -17,10 +17,10 @@ const TaskList = async ({ category }: { category: string }) => {
       <div className="w-full space-y-8 rounded-3xl border-2 border-slate-200 px-10 py-6 ">
         <div>
           {taskData.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8  sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8  lg:grid-cols-2">
               <div>
-                <h3> Incomplete Tasks </h3>
-                <div className=" border border-slate-300 py-10 px-5 rounded-xl grid grid-cols-1 gap-6 md:grid-cols-2">
+                <h3 className="py-5"> Incomplete Tasks </h3>
+                <div className=" border border-slate-300 py-10 px-5 rounded-xl grid grid-cols-1 gap-6 lg:grid-cols-2">
                   {taskData
                     .filter((task) => !task.completed)
                     .map((task) => (
@@ -29,7 +29,7 @@ const TaskList = async ({ category }: { category: string }) => {
                 </div>
               </div>
               <div>
-                <h3> Complete Tasks </h3>
+                <h3 className="py-5"> Complete Tasks </h3>
                 <div className="border border-slate-300 py-10 px-5  rounded-xl grid grid-cols-1 gap-6 md:grid-cols-2">
                   {taskData
                     .filter((task) => task.completed)
